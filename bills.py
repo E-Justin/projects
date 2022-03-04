@@ -1,8 +1,5 @@
-""" This program will:
-* take input from users to calculate how much they paid in bills
-* split the amounts evenly and tell who owes who and how much so that each person is paying the same amount for the month
-* give option to write data to a file to keep a record 
-* time / date stamp when saving data to file"""
+""" This program will take input from user(s) to calculate how much they paid in bills
+     Split the amounts evenly and tell who owes who and how much """
 
 import pyinputplus as pyip
 from datetime import datetime
@@ -21,9 +18,9 @@ class PersonsBills:
         self.insurance = 0      #6         
         self.internet = 0       #7
         self.other = 0          #8
-        self.total = 0
-        self.amountToReceive = 0
-        self.amountToPay = 0
+        self.total = 0              #! need to add this to write to file method
+        self.amountToReceive = 0    #! need to add this to write to file method
+        self.amountToPay = 0        #! need to add this to write to file method
     
     # method to display menu of bills to be added
     def setBills(self):
@@ -107,7 +104,6 @@ class PersonsBills:
         
     def printToFile(self):
         # opens file for appending/ creates file if it does not already exist
-        # writes all bill data for a specific user to the file with a time/ date stamp
         f = open("billsDataFile.txt", "a+")
         f.write("\n")
         f.write("****************************************")
@@ -144,7 +140,7 @@ def menu():
         print(" 2 ..... Enter bills for %s " % (user2Name.name))
         print(" 3 ..... Calculate totals ")
         print(" 4 ..... 50/50 split (who owes who and how much) ") 
-        print(" 5 ..... Write info to file ") 
+        print(" 5 ..... Write info to file ") #! need to do this still
         print(" 0 ..... Exit Program")
         input = pyip.inputNum()
         if input == 0:
