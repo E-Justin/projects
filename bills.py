@@ -1,7 +1,14 @@
-""" This program will take input from users to calculate how much they paid in bills
-     Split the amounts evenly and tell who owes who and how much """
+""" This program will:
+* take input from users to calculate how much they paid in bills
+* split the amounts evenly and tell who owes who and how much so that each person is paying the same amount for the month
+* give option to write data to a file to keep a record 
+* time / date stamp when saving data to file"""
 
 import pyinputplus as pyip
+from datetime import datetime
+#                                      0123456789012345678
+now = datetime.now() # gets date/ time 2022-03-03 14:51:01.123
+
 
 class PersonsBills:
     def __init__(self, name):
@@ -14,9 +21,9 @@ class PersonsBills:
         self.insurance = 0      #6         
         self.internet = 0       #7
         self.other = 0          #8
-        self.total = None
-        self.amountToReceive = None
-        self.amountToPay = None
+        self.total = 0
+        self.amountToReceive = 0
+        self.amountToPay = 0
     
     # method to display menu of bills to be added
     def setBills(self):
@@ -75,11 +82,11 @@ class PersonsBills:
         return self.total
     
 
-    
+    # method to determine who owes who and how much
     def whoOwesWho(self):
-        if user1Name.total is None:
+        if user1Name.total == 0:
             user1Name.calculateTotal()
-        if user2Name.total is None:
+        if user2Name.total == 0:
             user2Name.calculateTotal()
         # if user 1 paid more in bills
         if user1Name.total > user2Name.total:
@@ -97,6 +104,23 @@ class PersonsBills:
             print("%s owes %s : $%d " % (user1Name.name, user2Name.name, amountOwed))
         else:
             print("Each person paid the same. Yall good. ")
+        
+    def printToFile(self):
+        # opens file for appending/ creates file if it does not already exist
+        # writes all bill data for a specific user to the file with a time/ date stamp
+        f = open("billsDataFile.txt", "a+")
+        f.write("\n")
+        f.write("****************************************")
+        f.write(str(now) + "\n")
+        f.write("******* %s's bills for the month *******\n" % (self.name))
+        f.write("Water       : " + str(self.waterBill)+ "\n")
+        f.write("Electricity : " + str(self.electricBill)+ "\n")
+        f.write("Mortgage    : " + str(self.mortgage)+ "\n")
+        f.write("Child care  : " + str(self.childCare)+ "\n")
+        f.write("Phone       : " + str(self.phoneBill)+ "\n")
+        f.write("Insurance   : " + str(self.insurance)+ "\n")
+        f.write("Internet    : " + str(self.internet)+ "\n")
+        f.write("Other       : " + str(self.other)+ "\n\n")
         
 
 
@@ -119,8 +143,8 @@ def menu():
         print(" 1 ..... Enter bills for %s " % (user1Name.name))
         print(" 2 ..... Enter bills for %s " % (user2Name.name))
         print(" 3 ..... Calculate totals ")
-        print(" 4 ..... 50/50 split (who owes who and how much) ") #! need to do this still
-        print(" 5 ..... Write info to file ") #! need to do this still
+        print(" 4 ..... 50/50 split (who owes who and how much) ") 
+        print(" 5 ..... Write info to file ") 
         print(" 0 ..... Exit Program")
         input = pyip.inputNum()
         if input == 0:
@@ -138,6 +162,10 @@ def menu():
             print(" %s's total: %d "  % (user2Name.name, user2Name.total))
         if input == 4:
             user2Name.whoOwesWho()
+        if input == 5:
+            user1Name.printToFile()
+            user2Name.printToFile()
+            
 
 menu()
 
