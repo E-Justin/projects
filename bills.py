@@ -1,4 +1,4 @@
-""" This program will take input from user(s) to calculate how much they paid in bills
+ """ This program will take input from user(s) to calculate how much they paid in bills
      Split the amounts evenly and tell who owes who and how much """
 
 import pyinputplus as pyip
@@ -18,9 +18,9 @@ class PersonsBills:
         self.insurance = 0      #6         
         self.internet = 0       #7
         self.other = 0          #8
-        self.total = 0              #! need to add this to write to file method
-        self.amountToReceive = 0    #! need to add this to write to file method
-        self.amountToPay = 0        #! need to add this to write to file method
+        self.total = 0              
+        self.amountToReceive = 0    
+        self.amountToPay = 0        
     
     # method to display menu of bills to be added
     def setBills(self):
@@ -116,7 +116,13 @@ class PersonsBills:
         f.write("Phone       : " + str(self.phoneBill)+ "\n")
         f.write("Insurance   : " + str(self.insurance)+ "\n")
         f.write("Internet    : " + str(self.internet)+ "\n")
-        f.write("Other       : " + str(self.other)+ "\n\n")
+        f.write("Other       : " + str(self.other)+ "\n")
+        f.write(" ******************************************\n")
+        f.write("Total       : " + str(self.total) + "\n")
+        f.write("You owe     : " + str(self.amountToPay) + "\n")
+        f.write("You are getting : " + str(self.amountToReceive) + " from the other person \n")
+        f.write(" ******************************************\n")
+        f.write(" ******************************************\n\n")
         
 
 
@@ -140,7 +146,7 @@ def menu():
         print(" 2 ..... Enter bills for %s " % (user2Name.name))
         print(" 3 ..... Calculate totals ")
         print(" 4 ..... 50/50 split (who owes who and how much) ") 
-        print(" 5 ..... Write info to file ") #! need to do this still
+        print(" 5 ..... Write info to file ") 
         print(" 0 ..... Exit Program")
         input = pyip.inputNum()
         if input == 0:
@@ -164,7 +170,3 @@ def menu():
             
 
 menu()
-
-
-        
-
