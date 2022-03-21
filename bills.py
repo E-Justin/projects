@@ -62,16 +62,16 @@ class PersonsBills:
     # method to display bill amounts by a certain user
     def displayBillAmounts(self):
         print(" ********** %s's Bills Paid ********** " % (self.name))
-        print("Water.......: " + str(self.waterBill))
-        print("Electricity.: " + str(self.electricBill))
-        print("Mortgage....: " + str(self.mortgage))
-        print("Child care..: " + str(self.childCare))
-        print("Phone.......: " + str(self.phoneBill))
-        print("Insurance...: " + str(self.insurance))
-        print("Internet....: " + str(self.internet))
-        print("Other.......: " + str(self.other))
-        print("Amount to pay to other : " + str(self.amountToPay))
-        print("Amount to receive from other : " + str(self.amountToReceive))
+        print("Water.......: " + "${:.2f}".format(self.waterBill))
+        print("Electricity.: " + "${:.2f}".format(self.electricBill))
+        print("Mortgage....: " + "${:.2f}".format(self.mortgage))
+        print("Child care..: " + "${:.2f}".format(self.childCare))
+        print("Phone.......: " + "${:.2f}".format(self.phoneBill))
+        print("Insurance...: " + "${:.2f}".format(self.insurance))
+        print("Internet....: " + "${:.2f}".format(self.internet))
+        print("Other.......: " + "${:.2f}".format(self.other))
+        print("Amount to pay to other : " + "${:.2f}".format(self.amountToPay))
+        print("Amount to receive from other : " + "${:.2f}".format(self.amountToReceive))
      
      # method to calculate total amount paid in bills
     def calculateTotal(self):
@@ -92,13 +92,15 @@ class PersonsBills:
             amountOwed = (difference / 2)
             user2.amountToPay = amountOwed #user2 owes money
             user1.amountToReceive = amountOwed # user1 should receive money
-            print("%s owes %s : $%d " % (user2.name, user1.name, amountOwed))
+            #print("%s owes %s : $%d " % (user2.name, user1.name, amountOwed))
+            print(user2.name + " owes " + user1.name + " : " + "${:.2f}".format(user1.total))
         elif user1.total < user2.total:
             difference = user2.total - user1.total
             amountOwed = difference / 2
             user1.amountToPay = amountOwed
             user2.amountToReceive = amountOwed
-            print("%s owes %s : $%d " % (user1.name, user2.name, amountOwed))
+            #print("%s owes %s : $%d " % (user1.name, user2.name, amountOwed))
+            print(user1.name + " owes " + user2.name + " : " + "${:.2f}".format(user2.total))
         else:
             print("Each person paid the same. Yall good. ")
         
@@ -161,8 +163,8 @@ def menu():
             user2.calculateTotal()
         
             print("########## TOTALS ########## ")
-            print(user1.name + "'s total : " + "{:.2f}".format(user1.total)) # prints totals in $$ format (with two decimal places)
-            print(user2.name + "'s total : " + "{:.2f}".format(user2.total)) # prints totals in $$ format (with two decimal places)
+            print(user1.name + "'s total : " + "${:.2f}".format(user1.total)) # prints totals in $$ format (with two decimal places)
+            print(user2.name + "'s total : " + "${:.2f}".format(user2.total)) # prints totals in $$ format (with two decimal places)
         if input == 4:
             user2.whoOwesWho()
         if input == 5:
