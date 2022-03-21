@@ -1,4 +1,4 @@
- """ This program will take input from user(s) to calculate how much they paid in bills
+""" This program will take input from user(s) to calculate how much they paid in bills
      Split the amounts evenly and tell who owes who and how much """
 
 import pyinputplus as pyip
@@ -81,24 +81,24 @@ class PersonsBills:
 
     # method to determine who owes who and how much
     def whoOwesWho(self):
-        if user1Name.total == 0:
-            user1Name.calculateTotal()
-        if user2Name.total == 0:
-            user2Name.calculateTotal()
+        if user1.total == 0:
+            user1.calculateTotal()
+        if user2.total == 0:
+            user2.calculateTotal()
         # if user 1 paid more in bills
-        if user1Name.total > user2Name.total:
+        if user1.total > user2.total:
             # gets difference of the two totals
-            difference = user1Name.total - user2Name.total
+            difference = user1.total - user2.total
             amountOwed = (difference / 2)
-            user2Name.amountToPay = amountOwed #user2 owes money
-            user1Name.amountToReceive = amountOwed # user1 should receive money
-            print("%s owes %s : $%d " % (user2Name.name, user1Name.name, amountOwed))
-        elif user1Name.total < user2Name.total:
-            difference = user2Name.total - user1Name.total
+            user2.amountToPay = amountOwed #user2 owes money
+            user1.amountToReceive = amountOwed # user1 should receive money
+            print("%s owes %s : $%d " % (user2.name, user1.name, amountOwed))
+        elif user1.total < user2.total:
+            difference = user2.total - user1.total
             amountOwed = difference / 2
-            user1Name.amountToPay = amountOwed
-            user2Name.amountToReceive = amountOwed
-            print("%s owes %s : $%d " % (user1Name.name, user2Name.name, amountOwed))
+            user1.amountToPay = amountOwed
+            user2.amountToReceive = amountOwed
+            print("%s owes %s : $%d " % (user1.name, user2.name, amountOwed))
         else:
             print("Each person paid the same. Yall good. ")
         
@@ -127,14 +127,14 @@ class PersonsBills:
 
 
 # get user names and capitalize the first letter            
-user1Name = pyip.inputStr("Enter person 1's name ")
-user1Name = user1Name.capitalize() 
-user2Name = pyip.inputStr("Enter person 2's name ")
-user2Name = user2Name.capitalize()
+user1 = pyip.inputStr("Enter person 1's name ")
+user1 = user1.capitalize() 
+user2 = pyip.inputStr("Enter person 2's name ")
+user2 = user2.capitalize()
 
 #instantiate classes for each user
-user1Name = PersonsBills(user1Name)
-user2Name = PersonsBills(user2Name)
+user1 = PersonsBills(user1)
+user2 = PersonsBills(user2)
 
 
 # main menu
@@ -142,8 +142,8 @@ def menu():
     input = int
     while input != 0:
         print(" ~~~~~~~~~~ MENU ~~~~~~~~~~ ")
-        print(" 1 ..... Enter bills for %s " % (user1Name.name))
-        print(" 2 ..... Enter bills for %s " % (user2Name.name))
+        print(" 1 ..... Enter bills for %s " % (user1.name))
+        print(" 2 ..... Enter bills for %s " % (user2.name))
         print(" 3 ..... Calculate totals ")
         print(" 4 ..... 50/50 split (who owes who and how much) ") 
         print(" 5 ..... Write info to file ") 
@@ -153,20 +153,21 @@ def menu():
             print("Exiting program ....")
             quit()
         if input == 1:
-            user1Name.setBills()
+            user1.setBills()
         if input == 2:
-            user2Name.setBills()
+            user2.setBills()
         if input == 3:
-            user1Name.calculateTotal()
-            user2Name.calculateTotal()
+            user1.calculateTotal()
+            user2.calculateTotal()
+        
             print("########## TOTALS ########## ")
-            print(" %s's total: %d "  % (user1Name.name, user1Name.total))
-            print(" %s's total: %d "  % (user2Name.name, user2Name.total))
+            print(user1.name + "'s total : " + "{:.2f}".format(user1.total)) # prints totals in $$ format (with two decimal places)
+            print(user2.name + "'s total : " + "{:.2f}".format(user2.total)) # prints totals in $$ format (with two decimal places)
         if input == 4:
-            user2Name.whoOwesWho()
+            user2.whoOwesWho()
         if input == 5:
-            user1Name.printToFile()
-            user2Name.printToFile()
+            user1.printToFile()
+            user2.printToFile()
             
 
 menu()
