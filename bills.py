@@ -93,14 +93,15 @@ class PersonsBills:
             user2.amountToPay = amountOwed #user2 owes money
             user1.amountToReceive = amountOwed # user1 should receive money
             #print("%s owes %s : $%d " % (user2.name, user1.name, amountOwed))
-            print(user2.name + " owes " + user1.name + " : " + "${:.2f}".format(user1.total))
+            print(user2.name + " owes " + user1.name + " : " + "${:.2f}".format(user2.amountToPay))
+            #if user 2 paid more in bills
         elif user1.total < user2.total:
             difference = user2.total - user1.total
-            amountOwed = difference / 2
+            amountOwed = (difference / 2)
             user1.amountToPay = amountOwed
             user2.amountToReceive = amountOwed
             #print("%s owes %s : $%d " % (user1.name, user2.name, amountOwed))
-            print(user1.name + " owes " + user2.name + " : " + "${:.2f}".format(user2.total))
+            print(user1.name + " owes " + user2.name + " : " + "${:.2f}".format(user1.amountToPay))
         else:
             print("Each person paid the same. Yall good. ")
         
@@ -111,18 +112,18 @@ class PersonsBills:
         f.write("****************************************")
         f.write(str(now) + "\n")
         f.write("******* %s's bills for the month *******\n" % (self.name))
-        f.write("Water       : " + str(self.waterBill)+ "\n")
-        f.write("Electricity : " + str(self.electricBill)+ "\n")
-        f.write("Mortgage    : " + str(self.mortgage)+ "\n")
-        f.write("Child care  : " + str(self.childCare)+ "\n")
-        f.write("Phone       : " + str(self.phoneBill)+ "\n")
-        f.write("Insurance   : " + str(self.insurance)+ "\n")
-        f.write("Internet    : " + str(self.internet)+ "\n")
-        f.write("Other       : " + str(self.other)+ "\n")
+        f.write("Water       : " + "${:.2f}".format(self.waterBill) + "\n")
+        f.write("Electricity : " + "${:.2f}".format(self.electricBill) + "\n")
+        f.write("Mortgage    : " + "${:.2f}".format(self.mortgage) + "\n")
+        f.write("Child Care  : " + "${:.2f}".format(self.childCare) + "\n")
+        f.write("Phone       : " + "${:.2f}".format(self.phoneBill) + "\n")
+        f.write("Insurance   : " + "${:.2f}".format(self.insurance) + "\n")
+        f.write("Internet    : " + "${:.2f}".format(self.internet) + "\n")
+        f.write("Other       : " + "${:.2f}".format(self.other) + "\n")
         f.write(" ******************************************\n")
-        f.write("Total       : " + str(self.total) + "\n")
-        f.write("You owe     : " + str(self.amountToPay) + "\n")
-        f.write("You are getting : " + str(self.amountToReceive) + " from the other person \n")
+        f.write("Your total      : " + "${:.2f}".format(self.total) + "\n")
+        f.write("You owe         : " + "${:.2f}".format(self.amountToPay) + "\n")
+        f.write("You are getting : " + "${:.2f}".format(self.amountToReceive) + " from the other person \n")
         f.write(" ******************************************\n")
         f.write(" ******************************************\n\n")
         
