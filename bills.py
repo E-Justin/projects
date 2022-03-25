@@ -1,7 +1,8 @@
 """ This program will:
           *  take input from user(s) to calculate how much they paid in bills
           *  give option to split the amounts evenly and tell who owes who and how much 
-          *  give option to write to/ create a file and write data to it"""
+          *  gives option to display each person's bills and the amounts
+          *  give option to create a file/ write to it to keep a record of what bills were paid and how much/ each person's totals/ who owes who and how much"""
 
 import pyinputplus as pyip
 from datetime import datetime
