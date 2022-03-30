@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-import tkinter.simpledialog
-import breezypythongui
+
 
 
 
@@ -11,14 +10,18 @@ root.title('Bills Data')
 root.geometry('300x300')
 
 # buttons
-saveToFileButton = Button(root, text = "Save to file", fg = 'blue')
+saveToFileButton = ttk.Button(root, text = "Save to file")
 saveToFileButton.grid(column = 1, row = 11, columnspan = 1)
+saveToFileButton.state(['disabled']) #! disabled the button until function is added
 
-calculateTotalButton = Button(root, text = "Calculate Total", fg = 'blue')
+
+calculateTotalButton = ttk.Button(root, text = "Calculate Total")
 calculateTotalButton.grid(column = 0, row = 11, columnspan = 1)
+calculateTotalButton.state(['disabled']) #! disabled the button until function is added
 
-whoOwesWhoButton = Button(root, text = " Who Owes Who?", fg = 'blue')
+whoOwesWhoButton = ttk.Button(root, text = " Who Owes Who?")
 whoOwesWhoButton.grid(column = 3, row = 11, columnspan = 1)
+whoOwesWhoButton.state(['disabled']) #! disabled the button until function is added
 
 #Entry field labels
 electricityBillLabel = Label(root, text = "Electricity Amount", fg = 'blue', font = ("Helvetica", 12))
