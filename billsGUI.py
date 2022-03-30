@@ -9,21 +9,22 @@ root = Tk()
 root.title('Bills Data')
 root.geometry('300x300')
 
-# buttons
+#############################################   buttons   ###################################################
 saveToFileButton = ttk.Button(root, text = "Save to file")
 saveToFileButton.grid(column = 1, row = 11, columnspan = 1)
 saveToFileButton.state(['disabled']) #! disabled the button until function is added
 
 
-calculateTotalButton = ttk.Button(root, text = "Calculate Total")
+calculateTotalButton = ttk.Button(root, text = "Calculate Total", command = lambda: calculateTotal())
 calculateTotalButton.grid(column = 0, row = 11, columnspan = 1)
-calculateTotalButton.state(['disabled']) #! disabled the button until function is added
+#calculateTotalButton.state(['disabled']) #! disabled the button until function is added
+
 
 whoOwesWhoButton = ttk.Button(root, text = " Who Owes Who?")
 whoOwesWhoButton.grid(column = 3, row = 11, columnspan = 1)
 whoOwesWhoButton.state(['disabled']) #! disabled the button until function is added
 
-#Entry field labels
+##################################   Entry field labels   ##################################################
 electricityBillLabel = Label(root, text = "Electricity Amount", fg = 'blue', font = ("Helvetica", 12))
 electricityBillLabel.grid(column = 0, row = 2, columnspan = 1)
 
@@ -49,7 +50,7 @@ otherLabel = Label(root, text = "Other Amount", fg = 'blue', font = ("Helvetica"
 otherLabel.grid(column = 0, row = 9, columnspan = 1)
 
 
-#entrie fields
+###############################  entry fields  ##############################################
 electricityBillField = Entry()
 electricityBillField.grid(column = 3, row = 2, columnspan = 1)
 
@@ -73,6 +74,28 @@ childCareField.grid(column = 3, row = 8, columnspan = 1)
 
 otherField = Entry()
 otherField.grid(column = 3, row = 9, columnspan = 1)
+
+###################################    functions   ################################################33
+def calculateTotal():
+    # get variables from entry fields and assign them to variables
+    electricAmount = float(electricityBillField.get())
+    mortgageAmount = float(mortgageBillField.get())
+    phoneAmount = float(phoneBillField.get())
+    insuranceAmount = float(insuranceBillField.get())
+    waterAmount = float(waterBillField.get())
+    internetAmount = float(internetBillField.get())
+    childCareAmount = float(childCareField.get())
+    otherAmount = float(otherField.get())
+
+    # calculate total amount of all bills paid
+    totalAmount = (electricAmount + mortgageAmount + phoneAmount 
+                    + insuranceAmount + waterAmount + internetAmount + childCareAmount + otherAmount) 
+
+    #label to display total amount
+    totalLabel = Label(root, text = "Total : " + str(totalAmount)) 
+    totalLabel.grid(column = 3, row = 13, columnspan = 1)
+
+
 
 
 root.mainloop()
