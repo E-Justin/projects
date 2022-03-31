@@ -124,7 +124,7 @@ user2OtherLabel.grid(column = 5, row = 9, columnspan = 1)
 
 
 
-###############################  entry fields  ##############################################
+###############################  user1's entry fields  ##############################################
 electricityBillField = Entry()
 electricityBillField.grid(column = 3, row = 2, columnspan = 1)
 
@@ -149,6 +149,30 @@ childCareField.grid(column = 3, row = 8, columnspan = 1)
 otherField = Entry()
 otherField.grid(column = 3, row = 9, columnspan = 1)
 
+#!##############################  user2's entry fields  ##############################################
 
+user2ElectricityBillField = Entry()
+user2ElectricityBillField.grid(column = 6, row = 2, columnspan = 1)
+
+user2MortgageBillField = Entry()
+user2MortgageBillField.grid(column = 6, row = 3, columnspan = 1)
+
+user2PhoneBillField = Entry()
+user2PhoneBillField.grid(column = 6, row = 4, columnspan = 1)
+
+user2InsuranceBillField = Entry()
+user2InsuranceBillField.grid(column = 6, row = 5, columnspan = 1)
+
+user2WaterBillField = Entry()
+user2WaterBillField.grid(column = 6, row = 6, columnspan = 1)
+
+user2InterneteBillField = Entry()
+user2InterneteBillField.grid(column = 6, row = 7, columnspan = 1)
+
+user2ChildCareBillField = Entry()
+user2ChildCareBillField.grid(column = 6, row = 8, columnspan = 1)
+
+user2OtherField = Entry()
+user2OtherField.grid(column = 6, row = 9, columnspan = 1)
 
 root.mainloop()
