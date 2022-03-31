@@ -43,8 +43,8 @@ class PersonsBills:
         User1.total = (User1.electricAmount + User1.mortgageAmount + User1.phoneAmount 
                         + User1.insuranceAmount + User1.waterAmount + User1.internetAmount + User1.childCareAmount + User1.otherAmount) 
 
-        #label to display total amount
-        user1TotalLabel = Label(root, text = (User1.name + "'s Total : " + str(User1.total)))
+        #label to display total amount in correct $$ format
+        user1TotalLabel = Label(root, text = (User1.name + "'s Total : "+ "${:.2f}".format(User1.total)))
         user1TotalLabel.grid(column = 3, row = 13, columnspan = 1)
 
         #! get variables from user2's entry fields and assign them to variables
@@ -61,8 +61,8 @@ class PersonsBills:
         User2.total = (User2.electricAmount + User2.mortgageAmount + User2.phoneAmount 
                         + User2.insuranceAmount + User2.waterAmount + User2.internetAmount + User2.childCareAmount + User2.otherAmount) 
 
-        #! label to display total amount
-        user2TotalLabel = Label(root, text = (User2.name + "'s Total : " + str(User2.total)))
+        #! label to display total amount in correct $$ format
+        user2TotalLabel = Label(root, text = (User2.name + "'s Total : " + "${:.2f}".format(User2.total)))
         user2TotalLabel.grid(column = 6, row = 13, columnspan = 1)
 
     
@@ -91,6 +91,12 @@ calculateTotalButton.grid(column = 3, row = 11, columnspan = 2)
 whoOwesWhoButton = ttk.Button(root, text = " Who Owes Who?")
 whoOwesWhoButton.grid(column = 4, row = 11, columnspan = 2)
 whoOwesWhoButton.state(['disabled']) #! disabled the button until function is added
+################################# Name labels at top ###############################################################
+user1Label = Label(root, text = User1.name + "'s Bills", fg = 'blue', font = ("Helvetica", 14))
+user1Label.grid(column = 0, row = 1, columnspan = 1)
+
+user2Label = Label(root, text = User2.name + "'s Bills", fg = 'red', font = ("Helvetica", 14))
+user2Label.grid(column = 5, row = 1, columnspan = 1)
 
 ##################################   User1's Entry field labels   ##################################################
 electricityBillLabel = Label(root, text = "Electricity Amount", fg = 'blue', font = ("Helvetica", 12))
