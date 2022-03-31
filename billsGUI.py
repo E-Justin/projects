@@ -1,13 +1,60 @@
 from tkinter import *
 from tkinter import ttk
+from datetime import datetime
+
+now = datetime.now() # gets date/ time 2022-03-03 14:51:01.123
+
+person1 = str(input("What is your name ?"))
+person1 = person1.capitalize()
+person2 = str(input("What is user 2's name?"))
+person2 = person2.capitalize()
+
+class PersonsBills:
+    def __init__(self, name):
+        self.name = name
+        self.waterAmount = 0            #1
+        self.electricAmount = 0         #2
+        self.mortgageAmount = 0       #3
+        self.childCareAmount = 0      #4
+        self.phoneAmount = 0      #5
+        self.insuranceAmount = 0      #6         
+        self.internetAmount = 0       #7
+        self.otherAmount = 0          #8
+        self.total = 0              
+        self.amountToReceive = 0    
+        self.amountToPay = 0        
+    ###################################    functions   ################################################33
+    def calculateTotal(self):
+        # get variables from entry fields and assign them to variables
+        self.electricAmount = float(electricityBillField.get() or 0)
+        self.mortgageAmount = float(mortgageBillField.get() or 0)
+        self.phoneAmount = float(phoneBillField.get() or 0)
+        self.insuranceAmount = float(insuranceBillField.get() or 0)
+        self.waterAmount = float(waterBillField.get() or 0)
+        self.internetAmount = float(internetBillField.get() or 0)
+        self.childCareAmount = float(childCareField.get() or 0)
+        self.otherAmount = float(otherField.get() or 0)
+
+        # calculate total amount of all bills paid
+        self.total = (self.electricAmount + self.mortgageAmount + self.phoneAmount 
+                        + self.insuranceAmount + self.waterAmount + self.internetAmount + self.childCareAmount + self.otherAmount) 
+
+        #label to display total amount
+        totalLabel = Label(root, text = (self.name + "'s Total : " + str(self.total)))
+        totalLabel.grid(column = 3, row = 13, columnspan = 1)
+        print(self.electricAmount)
+        print(type(self.electricAmount))
 
 
+#instantiate classes for each user
+User1 = PersonsBills(person1)
+User2 = PersonsBills(person2)
 
 
 #initializing root window
 root = Tk()
 root.title('Bills Data')
-root.geometry('300x300')
+# root.geometry('300x300')
 
 #############################################   buttons   ###################################################
 saveToFileButton = ttk.Button(root, text = "Save to file")
@@ -15,7 +62,7 @@ saveToFileButton.grid(column = 1, row = 11, columnspan = 1)
 saveToFileButton.state(['disabled']) #! disabled the button until function is added
 
 
-calculateTotalButton = ttk.Button(root, text = "Calculate Total", command = lambda: calculateTotal())
+calculateTotalButton = ttk.Button(root, text = "Calculate Total", command = lambda: User1.calculateTotal()) #! this is for user 1... for now
 calculateTotalButton.grid(column = 0, row = 11, columnspan = 1)
 #calculateTotalButton.state(['disabled']) #! disabled the button until function is added
 
@@ -75,25 +122,8 @@ childCareField.grid(column = 3, row = 8, columnspan = 1)
 otherField = Entry()
 otherField.grid(column = 3, row = 9, columnspan = 1)
 
-###################################    functions   ################################################33
-def calculateTotal():
-    # get variables from entry fields and assign them to variables
-    electricAmount = float(electricityBillField.get())
-    mortgageAmount = float(mortgageBillField.get())
-    phoneAmount = float(phoneBillField.get())
-    insuranceAmount = float(insuranceBillField.get())
-    waterAmount = float(waterBillField.get())
-    internetAmount = float(internetBillField.get())
-    childCareAmount = float(childCareField.get())
-    otherAmount = float(otherField.get())
 
-    # calculate total amount of all bills paid
-    totalAmount = (electricAmount + mortgageAmount + phoneAmount 
-                    + insuranceAmount + waterAmount + internetAmount + childCareAmount + otherAmount) 
 
-    #label to display total amount
-    totalLabel = Label(root, text = "Total : " + str(totalAmount)) 
-    totalLabel.grid(column = 3, row = 13, columnspan = 1)
 
 
 
