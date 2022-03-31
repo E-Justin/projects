@@ -14,38 +14,58 @@ person2 = person2.capitalize()
 class PersonsBills:
     def __init__(self, name):
         self.name = name
-        self.waterAmount = 0          #1
-        self.electricAmount = 0       #2
-        self.mortgageAmount = 0       #3
-        self.childCareAmount = 0      #4
-        self.phoneAmount = 0          #5
-        self.insuranceAmount = 0      #6         
-        self.internetAmount = 0       #7
-        self.otherAmount = 0          #8
+        self.waterAmount = 0          
+        self.electricAmount = 0       
+        self.mortgageAmount = 0       
+        self.childCareAmount = 0      
+        self.phoneAmount = 0          
+        self.insuranceAmount = 0             
+        self.internetAmount = 0       
+        self.otherAmount = 0          
         self.total = 0              
         self.amountToReceive = 0    
-        self.amountToPay = 0        
+        self.amountToPay = 0
+
+
     ###################################    functions   ################################################33
-    def calculateTotal(self):
-        # get variables from entry fields and assign them to variables
-        self.electricAmount = float(electricityBillField.get() or 0)
-        self.mortgageAmount = float(mortgageBillField.get() or 0)
-        self.phoneAmount = float(phoneBillField.get() or 0)
-        self.insuranceAmount = float(insuranceBillField.get() or 0)
-        self.waterAmount = float(waterBillField.get() or 0)
-        self.internetAmount = float(internetBillField.get() or 0)
-        self.childCareAmount = float(childCareField.get() or 0)
-        self.otherAmount = float(otherField.get() or 0)
+    def calculateTotals(self):
+        # get variables from user1's entry fields and assign them to variables
+        User1.electricAmount = float(electricityBillField.get() or 0)
+        User1.mortgageAmount = float(mortgageBillField.get() or 0)
+        User1.phoneAmount = float(phoneBillField.get() or 0)
+        User1.insuranceAmount = float(insuranceBillField.get() or 0)
+        User1.waterAmount = float(waterBillField.get() or 0)
+        User1.internetAmount = float(internetBillField.get() or 0)
+        User1.childCareAmount = float(childCareField.get() or 0)
+        User1.otherAmount = float(otherField.get() or 0)
 
         # calculate total amount of all bills paid
-        self.total = (self.electricAmount + self.mortgageAmount + self.phoneAmount 
-                        + self.insuranceAmount + self.waterAmount + self.internetAmount + self.childCareAmount + self.otherAmount) 
+        User1.total = (User1.electricAmount + User1.mortgageAmount + User1.phoneAmount 
+                        + User1.insuranceAmount + User1.waterAmount + User1.internetAmount + User1.childCareAmount + User1.otherAmount) 
 
         #label to display total amount
-        totalLabel = Label(root, text = (self.name + "'s Total : " + str(self.total)))
-        totalLabel.grid(column = 3, row = 13, columnspan = 1)
-  
+        user1TotalLabel = Label(root, text = (User1.name + "'s Total : " + str(User1.total)))
+        user1TotalLabel.grid(column = 3, row = 13, columnspan = 1)
 
+        #! get variables from user2's entry fields and assign them to variables
+        User2.electricAmount = float(user2ElectricityBillField.get() or 0)
+        User2.mortgageAmount = float(user2MortgageBillField.get() or 0)
+        User2.phoneAmount = float(user2PhoneBillField.get() or 0)
+        User2.insuranceAmount = float(user2InsuranceBillField.get() or 0)
+        User2.waterAmount = float(user2WaterBillField.get() or 0)
+        User2.internetAmount = float(user2InternetBillField.get() or 0)
+        User2.childCareAmount = float(user2ChildCareBillField.get() or 0)
+        User2.otherAmount = float(user2OtherField.get() or 0)
+
+        #! calculate total amount of all bills paid
+        User2.total = (User2.electricAmount + User2.mortgageAmount + User2.phoneAmount 
+                        + User2.insuranceAmount + User2.waterAmount + User2.internetAmount + User2.childCareAmount + User2.otherAmount) 
+
+        #! label to display total amount
+        user2TotalLabel = Label(root, text = (User2.name + "'s Total : " + str(User2.total)))
+        user2TotalLabel.grid(column = 6, row = 13, columnspan = 1)
+
+    
 
 #instantiate classes for each user
 User1 = PersonsBills(person1)
@@ -59,17 +79,17 @@ root.title('Bills Data')
 
 #############################################   buttons   ###################################################
 saveToFileButton = ttk.Button(root, text = "Save to file")
-saveToFileButton.grid(column = 1, row = 11, columnspan = 1)
+saveToFileButton.grid(column = 1, row = 11, columnspan = 2)
 saveToFileButton.state(['disabled']) #! disabled the button until function is added
 
 
-calculateTotalButton = ttk.Button(root, text = "Calculate Total", command = lambda: User1.calculateTotal()) #! this is for user 1... for now
-calculateTotalButton.grid(column = 0, row = 11, columnspan = 1)
+calculateTotalButton = ttk.Button(root, text = "Calculate Totals", command = lambda: User1.calculateTotals()) 
+calculateTotalButton.grid(column = 3, row = 11, columnspan = 2)
 #calculateTotalButton.state(['disabled']) #! disabled the button until function is added
 
 
 whoOwesWhoButton = ttk.Button(root, text = " Who Owes Who?")
-whoOwesWhoButton.grid(column = 3, row = 11, columnspan = 1)
+whoOwesWhoButton.grid(column = 4, row = 11, columnspan = 2)
 whoOwesWhoButton.state(['disabled']) #! disabled the button until function is added
 
 ##################################   User1's Entry field labels   ##################################################
@@ -166,8 +186,8 @@ user2InsuranceBillField.grid(column = 6, row = 5, columnspan = 1)
 user2WaterBillField = Entry()
 user2WaterBillField.grid(column = 6, row = 6, columnspan = 1)
 
-user2InterneteBillField = Entry()
-user2InterneteBillField.grid(column = 6, row = 7, columnspan = 1)
+user2InternetBillField = Entry()
+user2InternetBillField.grid(column = 6, row = 7, columnspan = 1)
 
 user2ChildCareBillField = Entry()
 user2ChildCareBillField.grid(column = 6, row = 8, columnspan = 1)
