@@ -30,14 +30,17 @@ class PersonsBills:
     ###################################    functions   ################################################33
     def calculateTotals(self):
         # get variables from user1's entry fields and assign them to variables
-        User1.electricAmount = float(electricityBillField.get() or 0)
-        User1.mortgageAmount = float(mortgageBillField.get() or 0)
-        User1.phoneAmount = float(phoneBillField.get() or 0)
-        User1.insuranceAmount = float(insuranceBillField.get() or 0)
-        User1.waterAmount = float(waterBillField.get() or 0)
-        User1.internetAmount = float(internetBillField.get() or 0)
-        User1.childCareAmount = float(childCareField.get() or 0)
-        User1.otherAmount = float(otherField.get() or 0)
+        try:
+            User1.electricAmount = float(electricityBillField.get() or 0)
+            User1.mortgageAmount = float(mortgageBillField.get() or 0)
+            User1.phoneAmount = float(phoneBillField.get() or 0)
+            User1.insuranceAmount = float(insuranceBillField.get() or 0)
+            User1.waterAmount = float(waterBillField.get() or 0)
+            User1.internetAmount = float(internetBillField.get() or 0)
+            User1.childCareAmount = float(childCareField.get() or 0)
+            User1.otherAmount = float(otherField.get() or 0)
+        except:
+            errorLabel.config(text = "Please enter numbers ONLY (one decimal is cool too)", fg = 'green', font = ("Helvetica", 15))
 
         # calculate total amount of all bills paid
         User1.total = (User1.electricAmount + User1.mortgageAmount + User1.phoneAmount 
@@ -122,9 +125,13 @@ user1Label.grid(column = 0, row = 1, columnspan = 1)
 user2Label = Label(root, text = User2.name + "'s Bills", fg = 'red', font = ("Helvetica", 14))
 user2Label.grid(column = 5, row = 1, columnspan = 1)
 
-################################# Name labels at bottom ###############################################################
+################################# labels at bottom ###############################################################
 whoOwesWhoLabel = Label(root, text = ' ')
 whoOwesWhoLabel.grid(column = 3, row = 14, columnspa = 4)
+
+#!################################ error labels at bottom ###########################################################
+errorLabel = Label(root, text = '')
+errorLabel.grid(column = 2, row = 15, columnspan = 4)
 
 ##################################   User1's Entry field labels   ##################################################
 electricityBillLabel = Label(root, text = "Electricity Amount", fg = 'blue', font = ("Helvetica", 12))
