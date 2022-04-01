@@ -5,10 +5,10 @@ from datetime import datetime
 now = datetime.now() # gets date/ time 2022-03-03 14:51:01.123
 
 # person1 = str(input("What is your name ?")) #! commented out for testing
-person1 = 'justin'
+person1 = 'user 1' #! this is just here for testing: user will provide the names when done
 person1 = person1.capitalize()
 # person2 = str(input("What is user 2's name?")) #! commented out for testing
-person2 = 'zack'
+person2 = 'user 2' #! this is just here for testing: user will provide the names when done
 person2 = person2.capitalize()
 
 class PersonsBills:
@@ -65,7 +65,31 @@ class PersonsBills:
         user2TotalLabel = Label(root, text = (User2.name + "'s Total : " + "${:.2f}".format(User2.total)))
         user2TotalLabel.grid(column = 6, row = 13, columnspan = 1)
 
-    
+
+    def whoOwesWho(self):
+        whoOwesWhoLabel.config(text = "")
+        
+        User1.calculateTotals() # this calculates both user's totals
+        if User1.total > User2.total: # if user1 paid more than user2
+            difference = User1.total - User2.total
+            amountOwed = (difference / 2)
+            User2.amountToPay = amountOwed
+            User1.amountToReceive = amountOwed
+            # prints: user2 owes user 1 : $_______ at the bottom of the gui in correct currency format
+            whoOwesWhoLabel.config(text = User2.name + " owes " + User1.name + " : " + "${:.2f}".format(User2.amountToPay))
+        elif User1.total < User2.total: # if user2 paid more than user1
+            difference = User2.total - User1.total
+            amountOwed = (difference / 2)
+            User1.amountToPay = amountOwed
+            User2.amountToReceive = amountOwed
+            # prints: user1 owes user 2 : $_______ at the bottom of the gui in correct currency format
+            whoOwesWhoLabel.config(text = User1.name + " owes " + User2.name + " : " + "${:.2f}".format(User1.amountToPay))
+        else:
+            whoOwesWhoLabel.config(text = " Y'all each paid the same amount in bills this month ")
+            
+
+
+
 
 #instantiate classes for each user
 User1 = PersonsBills(person1)
@@ -88,15 +112,19 @@ calculateTotalButton.grid(column = 3, row = 11, columnspan = 2)
 #calculateTotalButton.state(['disabled']) #! disabled the button until function is added
 
 
-whoOwesWhoButton = ttk.Button(root, text = " Who Owes Who?")
-whoOwesWhoButton.grid(column = 4, row = 11, columnspan = 2)
-whoOwesWhoButton.state(['disabled']) #! disabled the button until function is added
+whoOwesWhoButton = ttk.Button(root, text = " Who Owes Who?", command = lambda: User1.whoOwesWho())
+whoOwesWhoButton.grid(column = 5, row = 11, columnspan = 2)
+#whoOwesWhoButton.state(['disabled']) #! disabled the button until function is added
 ################################# Name labels at top ###############################################################
 user1Label = Label(root, text = User1.name + "'s Bills", fg = 'blue', font = ("Helvetica", 14))
 user1Label.grid(column = 0, row = 1, columnspan = 1)
 
 user2Label = Label(root, text = User2.name + "'s Bills", fg = 'red', font = ("Helvetica", 14))
 user2Label.grid(column = 5, row = 1, columnspan = 1)
+
+################################# Name labels at bottom ###############################################################
+whoOwesWhoLabel = Label(root, text = ' ')
+whoOwesWhoLabel.grid(column = 3, row = 14, columnspa = 4)
 
 ##################################   User1's Entry field labels   ##################################################
 electricityBillLabel = Label(root, text = "Electricity Amount", fg = 'blue', font = ("Helvetica", 12))
@@ -152,28 +180,28 @@ user2OtherLabel.grid(column = 5, row = 9, columnspan = 1)
 
 ###############################  user1's entry fields  ##############################################
 electricityBillField = Entry()
-electricityBillField.grid(column = 3, row = 2, columnspan = 1)
+electricityBillField.grid(column = 2, row = 2, columnspan = 1)
 
 mortgageBillField = Entry()
-mortgageBillField.grid(column = 3, row = 3, columnspan = 1)
+mortgageBillField.grid(column = 2, row = 3, columnspan = 1)
 
 phoneBillField = Entry()
-phoneBillField.grid(column = 3, row = 4, columnspan = 1)
+phoneBillField.grid(column = 2, row = 4, columnspan = 1)
 
 insuranceBillField = Entry()
-insuranceBillField.grid(column = 3, row = 5, columnspan = 1)
+insuranceBillField.grid(column = 2, row = 5, columnspan = 1)
 
 waterBillField = Entry()
-waterBillField.grid(column = 3, row = 6, columnspan = 1)
+waterBillField.grid(column = 2, row = 6, columnspan = 1)
 
 internetBillField = Entry()
-internetBillField.grid(column = 3, row = 7, columnspan = 1)
+internetBillField.grid(column = 2, row = 7, columnspan = 1)
 
 childCareField = Entry()
-childCareField.grid(column = 3, row = 8, columnspan = 1)
+childCareField.grid(column = 2, row = 8, columnspan = 1)
 
 otherField = Entry()
-otherField.grid(column = 3, row = 9, columnspan = 1)
+otherField.grid(column = 2, row = 9, columnspan = 1)
 
 #!##############################  user2's entry fields  ##############################################
 
