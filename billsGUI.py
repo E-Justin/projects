@@ -92,7 +92,25 @@ class PersonsBills:
             whoOwesWhoLabel.config(text = User1.name + " owes " + User2.name + " : " + "${:.2f}".format(User1.amountToPay))
         else:
             whoOwesWhoLabel.config(text = " Y'all each paid the same amount in bills this month ")
-            
+
+    def printToFile(self):   
+        f = open("billsDataFile.txt", "a+")
+        f.write("\n")
+        f.write('\n')
+        f.write('#########################################\n')
+        f.write("############ "+ str(now) + "################# \n")
+        f.write("####### %s's bilss for the month #######\n" % (self.name)) 
+        f.write("Water.............: ${:.2f}".format(self.waterAmount) + "\n")
+        f.write("Electricity.......: ${:.2f}".format(self.electricAmount) + "\n")
+        f.write("Mortgage..........: ${:.2f}".format(self.mortgageAmount) + "\n")
+        f.write("Child care........: ${:.2f}".format(self.childCareAmount) + "\n")
+        f.write("Phone.............: ${:.2f}".format(self.phoneAmount) + "\n")
+        f.write("Insurance.........: ${:.2f}".format(self.insuranceAmount) + "\n")
+        f.write("Internet..........: ${:.2f}".format(self.internetAmount) + "\n")
+        f.write("Other.............: ${:.2f}".format(self.otherAmount) + "\n")
+        f.write('#########################################\n')
+        f.write('#########################################\n')
+        f.close()
 
 
 
@@ -109,9 +127,9 @@ root.title('Bills Data')
 # root.geometry('300x300')
 
 #############################################   buttons   ###################################################
-saveToFileButton = ttk.Button(root, text = "Save to file")
+saveToFileButton = ttk.Button(root, text = "Save to file", command = lambda: [User1.printToFile(), User2.printToFile()])
 saveToFileButton.grid(column = 1, row = 11, columnspan = 2)
-saveToFileButton.state(['disabled']) #! disabled the button until function is added
+#saveToFileButton.state(['disabled']) #! disabled the button until function is added
 
 
 calculateTotalButton = ttk.Button(root, text = "Calculate Totals", command = lambda: User1.calculateTotals()) 
