@@ -129,6 +129,7 @@ class PersonsBills:
         f.write("You are getting : " + "${:.2f}".format(self.amountToReceive) + " from the other person \n")
         f.write(" ******************************************\n")
         f.write(" ******************************************\n\n")
+        f.close()
         
 
 
