@@ -13,7 +13,6 @@ root.resizable(0, 0) # prevents root window from being resized
 clearButton = ttk.Button(root, text = 'CLR', command = lambda: clear())
 clearButton.grid(column = 4, row = 1,)
 
-
 addButton = ttk.Button(root, text = '+', command = lambda: press(" + ")) 
 addButton.grid(column = 4, row = 2 )
 
