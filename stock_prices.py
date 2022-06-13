@@ -4,9 +4,7 @@ from datetime import datetime
 # import pandas as pd
 
 today = datetime.now()
-today = today.ctime() # gets date in this format: Fri Jun 10 08:50:57 2022
-
-stock_name = str
+today = today.ctime() # gets date and time in user friendly format : Mon Jun 13 11:09:53 2022
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
 
@@ -16,31 +14,26 @@ soup = BeautifulSoup(source.text, 'lxml') # creating soup object
 
 #page_text = soup.get_text()
 
-current_price = soup.find('span', {'class': 'IsqQVc NprOob wT3VGc'}) # the price is found in a <span with this class name
-# print(current_price.get_text())
+current_price = soup.find('span', {'class': 'IsqQVc NprOob wT3VGc'}).text
+change = soup.find('span', {'jsname': 'qRSVye'}).text
+stock_name = soup.find('span', {'role': 'heading'}).text
+#print(today)
+#print(stock_name)
+#print(current_price)
+#print(change)
 
 
-
-
-
-
-
-
-
-
-
-
-f = open("stock_prices.txt", "a+")
-f.write("\n %s : $%s " % (today, current_price.get_text()))
+# write to file/ create if it does not already exist
+f = open("stock_prices.txt", "a+", encoding = 'utf-8')
+f.write("\n %s : %s : $%s : %s " % (today, stock_name, current_price, change))
+# f.write(today + stock_name + current_price + change)
 f.close()
+
 
 '''to do:
 * add more stocks
 * open and closing price
-* how much it went up/ down from the previous day
+* 
 * 
 * put all of this in a table/ excel sheet
 * probably more '''
-
-
-
