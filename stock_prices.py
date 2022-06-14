@@ -11,7 +11,9 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 
 url_dis = 'https://www.google.com/search?q=disney+stock+price+now&oq=disney+stock+price+now&aqs=chrome..69i57j0i22i30l9.7622j1j15&sourceid=chrome&ie=UTF-8'
 url_appl = 'https://www.google.com/search?q=apple+stock+price+now&oq=apple+stock+price+now&aqs=chrome..69i57j0i22i30l9.2717j1j7&sourceid=chrome&ie=UTF-8'
-
+url_nvida = 'https://www.google.com/search?q=nvida+stock+price+now&oq=nvida+stock+price+now&aqs=chrome..69i57.6212j1j7&sourceid=chrome&ie=UTF-8'
+url_ford = 'https://www.google.com/search?q=ford+stock+price+now&oq=ford+stock+price+now&aqs=chrome..69i57j0i131i433i512l3j0i512l6.3353j1j7&sourceid=chrome&ie=UTF-8'
+url_microsoft = 'https://www.google.com/search?q=microsoft+stock+price+now&oq=microsoft+stock+price+now&aqs=chrome..69i57j0i22i30l9.4354j1j7&sourceid=chrome&ie=UTF-8'
 
 def get_stock_info(url:str):
     source = requests.get(url, headers=headers) 
@@ -35,16 +37,19 @@ def get_stock_info(url:str):
 
 f = open("stock_prices.txt", "a+", encoding = "utf-8") # open file/ create if it does not already exist
 
-get_stock_info(url_dis) # get/ write disney stock info
-get_stock_info(url_appl) # get/ write apple stock info
+get_stock_info(url_dis) #  get / write disney stock info
+get_stock_info(url_appl) #  get / write apple stock info
+get_stock_info(url_nvida) #  get / write nvida stock info
+get_stock_info(url_ford) #  get / write ford stock info
+get_stock_info(url_microsoft) #  get / write microsfot stock info
 
 f.close() # close file when done
 
 
 '''to do:
-* add more stocks
+* 
 * open and closing price
 * improve formatting / put each stock in its own table
-* find a better site to do this with (one where I can use a base url and make small changes to navigate to different stocks)
+* 
 * put all of this in a table/ excel sheet
 * probably more '''
