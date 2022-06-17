@@ -1,7 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
+#import json
 # import pandas as pd
+
+
 
 today = datetime.now()
 today = today.ctime() # gets date and time in user friendly format : Mon Jun 13 11:09:53 2022
@@ -30,10 +33,13 @@ def get_stock_info(url:str):
     print(current_price)
     print(change)
 
-
-    # write to file
-    f.write("\n %s : %s : $%s : %s " % (today, stock_name, current_price, change))
     
+
+    
+    # write to file
+    f.write("\n %s : %s : $%s : %s " % (today.rjust(26), stock_name.rjust(22), current_price.rjust(9), change.rjust(7)))
+    
+
 
 f = open("stock_prices.txt", "a+", encoding = "utf-8") # open file/ create if it does not already exist
 
@@ -43,13 +49,13 @@ get_stock_info(url_nvida) #  get / write nvida stock info
 get_stock_info(url_ford) #  get / write ford stock info
 get_stock_info(url_microsoft) #  get / write microsfot stock info
 
-f.close() # close file when done
+f.close() # close file when done'''
 
 
 '''to do:
 * 
-* open and closing price
-* improve formatting / put each stock in its own table
+* percent change
+* function to average price for each stock in .txt file
 * 
 * put all of this in a table/ excel sheet
 * probably more '''
