@@ -10,6 +10,12 @@ values = ['2', '3', '4', '5', '6', '7', '8',
 users_hand = []
 dealers_hand = []
 
+tally = {
+    "Wins": 0,
+    "Losses": 0,
+    "Ties": 0,
+}
+
 
 def get_game_deck(s: list[str], v: list[str]) -> list[str]:
     """ this function takes suits as the first argument and card values as the second
@@ -19,13 +25,12 @@ def get_game_deck(s: list[str], v: list[str]) -> list[str]:
         for v in range(len(values)):  # iterates through each card for each suit
             # appends each card and suit to the game_deck variable
             deck.append('%s of %s' % (values[v], suits[s]))
+    random.shuffle(deck)  # shuffle the cards randomly
     return deck  # returns the full game deck
 
 
 # assign the game deck to the game_deck variable
 game_deck = get_game_deck(suits, values)
-
-random.shuffle(game_deck)  # shuffle the cards randomly
 
 
 def get_cards(deck_of_cards: list[str]) -> list[str]:
@@ -49,9 +54,8 @@ def get_cards(deck_of_cards: list[str]) -> list[str]:
     return cards  # returns two random cards out of the deck
 
 
-def hit_me(a_players_hand: list[str], deck_of_cards: list[str]) -> str:
-    """ this function appends another random card to the player's hand
-        and returns the new card"""
+def hit_me(deck_of_cards: list[str]) -> str:
+    """ this function takes a game deck as an argument and returns a random card for appending"""
     length = len(deck_of_cards)  # get length (it changes when a card is dealt)
     # get next card's random index
     next_card_index = random.randint(0, length - 1)
@@ -69,9 +73,9 @@ def total_up_hand(a_players_hand: list[str]) -> int:
     """ this function totals up the amount of points for a player's hand
         takes a player's hand as an argument and returns their total """
 
-    card3_value = 0
-    card4_value = 0
-    card5_value = 0
+    hand_values = []
+
+    total = 0
 
     length = len(a_players_hand)  # get total number of cards in hand
 
@@ -102,6 +106,7 @@ def total_up_hand(a_players_hand: list[str]) -> int:
         card1_value = 10  # value == 10
     elif card1_value == 14:  # if it is an Ace
         card1_value = 11  # value is 11
+    hand_values.append(card1_value)
 
     # if it is not a face card, get the value of the card
     card2_value = values.index(card2) + 2
@@ -109,55 +114,106 @@ def total_up_hand(a_players_hand: list[str]) -> int:
         card2_value = 10  # value == 10
     elif card2_value == 14:  # if it is an Ace
         card2_value = 11  # value is 11
+    hand_values.append(card2_value)
 
-    if length > 2:  # if they have 3 or more cards in their hand
+    if length > 2:
         card3_value = values.index(card3) + 2
         if card3_value >= 11 and card3_value <= 13:  # if it is a face card other than Ace
             card3_value = 10  # value == 10
         elif card3_value == 14:  # if it is an Ace
             card3_value = 11  # value is 11
+        hand_values.append(card3_value)
 
-    if length > 3:  # if they ahve 4 or more cards in their hand
+    if length > 3:
         card4_value = values.index(card4) + 2
         if card4_value >= 11 and card4_value <= 13:  # if it is a face card other than Ace
             card4_value = 10  # value == 10
         elif card4_value == 14:  # if it is an Ace
             card4_value = 11  # value is 11
+        hand_values.append(card4_value)
 
-    if length > 4:  # if they have 5 cards or more in their hand
+    if length > 4:
         card5_value = values.index(card5) + 2
         if card5_value >= 11 and card5_value <= 13:  # if it is a face card other than Ace
             card5_value = 10  # value == 10
         elif card5_value == 14:  # if it is an Ace
             card5_value = 11  # value is 11
+        hand_values.append(card5_value)
 
-    total = card1_value + card2_value + card3_value + \
-        card4_value + card5_value  # get total
+    for num in hand_values:  # iterate through each number in
+        total += num
 
     if total == 21 and length == 2:  # if the user gets blackjack
         print(' ***** Blackjack! ****** ')
-    elif total > 21:  # if the player busts
-        print(' ----- Bust! ------ ')
-    else:
-        print('Your current total is : %d ' % total)  # show player's total
+    elif total > 21:
+        print(' ----- Bust! ------ ')  # if the user busts
 
     return total  # return total
 
 
+# get dealer's total from inital hand
+dealers_total = total_up_hand(dealers_hand)
+
+
 def game_menu():
     """ this function displays the game menu and handles user input"""
+    global users_hand
+    global dealers_hand
+    global user_total
+    global dealers_total
+
     while True:
-        print('Your current hand : %s\n' % (users_hand))
+        print('Your current hand : %s' % (users_hand))
+        print("Dealer's hand : %s \n" % dealers_hand)
         print('1) .... Hit me ')
         print('2) .... Stay ')
         print('3) .... Exit Game')
         menu_selection = input('Select from the menu... \n')  # gets user input
         if menu_selection == '1':  # 'hit me '
             # append new card to users hand and remove it from the deck
-            users_hand.append(hit_me(users_hand, game_deck))
-            total_up_hand(users_hand)
+            users_hand.append(hit_me(game_deck))
+            user_total = total_up_hand(users_hand)
+            if user_total > 21:  # ! if user busts
+                print('You lose! ')
+                tally['Losses'] += 1  # add 1 to losses
+                print(tally)  # display wins/ losses/ ties
+                print('\n')
+                users_hand = get_cards(game_deck)  # user gets new hand
+                dealers_hand = get_cards(game_deck)  # dealer gets new hand
+                user_total = 0  # reset user total to 0
+                dealers_total = 0  # reset dealers total to 0
         elif menu_selection == '2':  # 'stay'
-            total_up_hand(users_hand)
+            user_total = total_up_hand(users_hand)  # total up user's hand
+            while dealers_total < 16:  # if user has less than 15 total points
+                # get another card for dealer
+                dealers_hand.append(hit_me(game_deck))
+                dealers_total = total_up_hand(
+                    dealers_hand)  # get dealer's new total
+            if dealers_total > 21:  # ! if dealer busts
+                tally['Wins'] += 1
+                print('##### Dealer busts #####')
+                print("##### You Win! #####")
+            elif user_total > dealers_total:  # if user wins
+                tally['Wins'] += 1  # add 1 to wins
+                print("##### You Win! #####")
+            elif user_total < dealers_total:  # if dealer wins
+                tally['Losses'] += 1  # add 1 to losses
+                print('##### You Lose! #####')
+            else:  # if its a tie
+                tally['Ties'] += 1
+                print("##### Y'all Tie! #####")
+            print("\nDealer's hand : %s = %d points " %
+                  (dealers_hand, dealers_total))
+            print("Your hand : %s = %d points" % (users_hand, user_total))
+            print(tally)  # show tally of wins/losses/ties
+            users_hand.clear()  # discard hand
+            dealers_hand.clear()  # discard hand
+            users_hand = get_cards(game_deck)  # user gets new hand
+            dealers_hand = get_cards(game_deck)  # dealer gets new hand
+            user_total = 0  # reset user total to 0
+            dealers_total = 0  # reset dealers total to 0
+            print('\n')
+
         else:
             print('Goodbye')
             break
@@ -166,9 +222,10 @@ def game_menu():
 game_menu()
 
 #! to do:
+#! create a list inside total_up_hand function to handle a_players_hand_values to assist with calculations
 #! ace == 11 or 1 (now it is only 11)
-#! what happens when user busts
-#! show dealer's cards
+#! 
+#! 
 #! betting?
-#! if statement to handle 'stay'
-#! win/ losses/ ties displayed
+#! 
+#! 
