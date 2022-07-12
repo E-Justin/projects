@@ -222,10 +222,10 @@ def game_menu():
 game_menu()
 
 #! to do:
-#! create a list inside total_up_hand function to handle a_players_hand_values to assist with calculations
+#! multi-player
 #! ace == 11 or 1 (now it is only 11)
-#! 
-#! 
+#! write high score to data file
+#! set max number of total losses before the game automatically quits
 #! betting?
-#! 
-#! 
+#! clean this file up by making a module for the functions
+#!
