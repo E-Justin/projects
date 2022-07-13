@@ -75,6 +75,11 @@ def total_up_hand(a_players_hand: list[str]) -> int:
 
     hand_values = []
 
+    ace = 0
+    for card in a_players_hand:
+        if 'Ace' in card:
+            ace += 1
+
     total = 0
 
     length = len(a_players_hand)  # get total number of cards in hand
@@ -140,19 +145,19 @@ def total_up_hand(a_players_hand: list[str]) -> int:
             card5_value = 11  # value is 11
         hand_values.append(card5_value)
 
-    for num in hand_values:  # iterate through each number in
+    for num in hand_values:
         total += num
 
     if total == 21 and length == 2:  # if the user gets blackjack
         print(' ***** Blackjack! ****** ')
-    elif total > 21:
-        print(' ----- Bust! ------ ')  # if the user busts
+    if total > 21 and ace > 0:  # ! if ace has a value of 11 and  they bust
+        while total > 21 and ace > 0:
+            total -= 10  # ace now has value of 1
+            ace -= 1
+    elif total > 21:  # ! if player busts (over 21 points)
+        print(' ----- Bust! ------ ')
 
-    return total  # return total
-
-
-# get dealer's total from inital hand
-dealers_total = total_up_hand(dealers_hand)
+    return total
 
 
 def game_menu():
@@ -163,8 +168,12 @@ def game_menu():
     global dealers_total
 
     while True:
-        print('Your current hand : %s' % (users_hand))
-        print("Dealer's hand : %s \n" % dealers_hand)
+        # get dealer's total points for current hand
+        dealers_total = total_up_hand(dealers_hand)
+        # get user's total points for current hand
+        user_total = total_up_hand(users_hand)
+        print('Your      hand: %s : %d' % (users_hand, user_total))
+        print("Dealer's hand : %s : %d\n" % (dealers_hand, dealers_total))
         print('1) .... Hit me ')
         print('2) .... Stay ')
         print('3) .... Exit Game')
@@ -223,7 +232,7 @@ game_menu()
 
 #! to do:
 #! multi-player
-#! ace == 11 or 1 (now it is only 11)
+#!
 #! write high score to data file
 #! set max number of total losses before the game automatically quits
 #! betting?
