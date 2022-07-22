@@ -208,6 +208,8 @@ game_menu()
 """ 
 Todo:
 1. decide who wins after user chooses to stay
+2. dealer continues getting another card after user stays until total is at or above 17
 2. betting
 3. write high score to file
+
 """
