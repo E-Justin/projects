@@ -129,13 +129,27 @@ class Game_manager:
         self.users_hand.clear()
         self.dealers_hand.clear()
 
+    def show_hands(self):
+        """ this function displays both players hands and current totals"""
+        print("\nPlayer 1's hand : %s : %d" %
+              (Cards.users_hand, Cards.users_total))
+        print("Dealer's hand   : %s : %d\n" %
+              (Cards.dealers_hand, Cards.dealers_total))
+
 
 Cards = Game_manager()  # instantiate Cards class
 
 
 def game_menu():
+    round_number = 0
     while True:
-        print('1) ... Play Blackjack ')
+        round_number += 1
+        if round_number > 1:  # !  if this is not the first game
+            print(Cards.tally)  # display wins/losses/ties
+        if round_number == 1:  # ! if it is game number 1
+            print('1) ... Play Blackjack ')
+        elif round_number > 1:  # ! if it is not game 1
+            print('1) ... Play again ')
         print('2) ... Exit Game ')
         selection = input('Choose from the menu ... ')  # get user selection
         if selection != '1' and selection != '2':  # ! if selection was not a valid choice
@@ -157,10 +171,7 @@ def game_menu():
                 Cards.get_dealers_total()  # get dealer total
 
                 #  display hands and totals
-                print("Player 1's hand : %s : %d" %
-                      (Cards.users_hand, Cards.users_total))
-                print("Dealer's hand   : %s : %d\n" %
-                      (Cards.dealers_hand, Cards.dealers_total))
+                Cards.show_hands()
 
                 #! ~~~~~~~~~~~~~~~ conditional statements to handle blackjacks or busting  ~~~~~~~~~~~~~~~
                 if Cards.users_total == 21 and len(Cards.users_hand) == 2:
@@ -194,22 +205,44 @@ def game_menu():
                 print('2) ... Stay')
                 print('3) ... Exit Game')
                 selection = input('Choose from the menu ...')  # get user input
-                if selection != '1' and selection != '2' and selection != '3':  # if user selects an invalid choice
+                if selection != '1' and selection != '2' and selection != '3':  # ! if user selects an invalid choice
                     print('\n*** Invalid selection ***\n')
-                elif selection == '1':  # hit me
+                elif selection == '1':  # ! hit me
                     Cards.user_says_hit_me()
-                else:  # stay
+                elif selection == '2':  # ! stay
+                    while Cards.dealers_total <= 17:  # while dealer has a total less than or equal to 17
+                        Cards.dealer_says_hit_me()  # dealer gets another card
+                        Cards.get_dealers_total()  # calculate dealer's new total
+
+                    Cards.show_hands()  # display hands before telling user who won
+
+                    if Cards.dealers_total > 21:  # ! if dealer busted
+                        print('\nDealer busted! \n')
+                        Cards.tally['Wins'] += 1  # win
+                        break
+                    elif Cards.users_total > Cards.dealers_total:  # ! if user wins
+                        print('\nPlayer 1 wins! \n')
+                        Cards.tally['Wins'] += 1
+                        break
+                    elif Cards.users_total < Cards.dealers_total:  # ! if dealer wins
+                        print('\nDealer wins! \n')
+                        Cards.tally['Losses'] += 1
+                        break
+                    else:  # ! if players tied
+                        print("\nY'all tied! \n")
+                        Cards.tally['Ties'] += 1
+                        break
+                else:  # ! exit game
                     print('Goodbye ...')
                     return
 
 
 game_menu()
 
+
 """ 
 Todo:
-1. decide who wins after user chooses to stay
-2. dealer continues getting another card after user stays until total is at or above 17
-2. betting
-3. write high score to file
+1. betting
+2. write high score to file
 
 """
