@@ -1,6 +1,6 @@
-import random
-from datetime import datetime
-import os
+import random  # for getting a card at random basaed off of index
+from datetime import datetime  # for printing the date/ time of high score
+import os  # for checking if file is empty or not
 
 
 class Game_manager:
@@ -187,7 +187,7 @@ Cards = Game_manager()  # instantiate Cards class
 
 
 def game_menu():
-    round_number = 0
+    round_number = 0  # to keep track of how many games have been played
     while True:
         round_number += 1
         if round_number > 1:  # !  if this is not the first game
