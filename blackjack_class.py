@@ -1,4 +1,6 @@
 import random
+from datetime import datetime
+import os
 
 
 class Game_manager:
@@ -136,6 +138,50 @@ class Game_manager:
         print("Dealer's hand   : %s : %d\n" %
               (Cards.dealers_hand, Cards.dealers_total))
 
+    def handle_high_score_data(self):
+        """ this function will check to see if the user got a new high score.
+            if a new high score was achieved, it will write the data to a txt file
+            else: it will read old high score from file """
+
+        now = datetime.now()  # get date and time
+
+        # open a file for reading/ writing
+        f = open('blackjack_high_score.txt', 'r+')
+
+        #! if file contains previous high score (not emtpy)
+        if os.path.getsize('blackjack_high_score.txt') != 0:
+            f_line = f.readline()  # read first (only) line in the file
+
+            # this is the index in the string where the number of wins is
+            x = int(f_line[7:9])
+
+            if self.tally['Wins'] > x:  # ! if a new high score was achieved
+                print('\nNew High Score of %d wins!!!' % self.tally['Wins'])
+                # clear contents of file to make room for new high score
+                f = open('blackjack_high_score.txt', 'w')
+                # enter name to save high score
+                user_name = input('What is the name of our new champion? ')
+                # write username and their high score
+                f.write('Wins : %d : %s : %s' %
+                        (self.tally['Wins'], user_name, now))
+            else:  # ! if user did not beat old high score
+                print('\nCurrent high score : ')
+                print(f_line)
+                print('Better luck next time. ')
+
+        elif self.tally['Wins'] > 0:  # if file is empty and the user got 1 or more wins
+            print('\nNew (1st) High Score of %d wins!!!' % self.tally['Wins'])
+            # enter name to save high score
+            user_name = input('What is the name of our new champion? ')
+            # write username and their high score
+            # write high score to file
+            f.write('Wins : %d : %s : %s' %
+                    (self.tally['Wins'], user_name, now))
+        else:
+            print('\nBetter luck next time. ')
+
+        f.close()  # close file when done
+
 
 Cards = Game_manager()  # instantiate Cards class
 
@@ -155,6 +201,9 @@ def game_menu():
         if selection != '1' and selection != '2':  # ! if selection was not a valid choice
             print('\n*** Invalid selection ***\n')
         elif selection == '2':  # ! if user selects to exit game
+            if round_number > 1:
+                # check to see if new high score / show old high score
+                Cards.handle_high_score_data()
             print('Goodbye')
             break
         else:  # ! if user chooses to play
@@ -233,6 +282,8 @@ def game_menu():
                         Cards.tally['Ties'] += 1
                         break
                 else:  # ! exit game
+                    # check to see if new high score/ show old high score
+                    Cards.handle_high_score_data()
                     print('Goodbye ...')
                     return
 
@@ -243,6 +294,5 @@ game_menu()
 """ 
 Todo:
 1. betting
-2. write high score to file
 
 """
