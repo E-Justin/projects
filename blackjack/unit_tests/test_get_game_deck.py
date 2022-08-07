@@ -1,4 +1,5 @@
 from black_jack import User, Deck_of_cards, Cards
+from collections import Counter
 
 """ Testing Cards.get_game_deck() function that reutrns:
  a full game deck of 52 cards
