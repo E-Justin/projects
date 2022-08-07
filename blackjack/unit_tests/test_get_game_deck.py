@@ -179,5 +179,15 @@ def test_get_game_deck_kings():
             kings += 1
 
     assert kings == 4
+    
+def test_get_game_deck_no_duplicates():
+    """ there should be no duplicates in the game deck """
+    c = Counter(Cards.game_deck)  # gets dictionary of cards and quantity for each
+    duplicates = 0  # no duplicates yet
+    for card in c:  # iterate through each card value pair
+        if c[card] > 1:  # if there is more than 1 of any card
+            duplicates += 1  # increment duplicates by 1
+            
+    assert duplicates == 0
 
 
