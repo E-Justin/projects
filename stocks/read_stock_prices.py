@@ -6,9 +6,9 @@ class Stock:
         self.total_prices = 0
 
     def set_total_prices(self, line):
-        if self.symbol in line:  # DIS
-            prices = float(line.split('#')[4])
-            self.count += 1
+        if self.symbol in line:   # if symbol is in line
+            prices = float(line.split('#')[4])  # get price for that line
+            self.count += 1  # tally instances of specific stock
             self.total_prices += prices
 
     def set_avg_price(self):
@@ -16,7 +16,7 @@ class Stock:
 
     def display_average_price(self):
         print("%s average price: %f" %
-              (self.symbol, self.average_price, 2))
+              (self.symbol, self.average_price)
 
 
 stock_names = ['disney', 'apple', 'nvidia', 'ford', 'microsoft', 'levi']
