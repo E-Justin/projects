@@ -16,7 +16,7 @@ class Stock:
 
     def display_average_price(self):
         print("%s average price: %f" %
-              (self.symbol, self.average_price)
+              (self.symbol, self.average_price))
 
 
 stock_names = ['disney', 'apple', 'nvidia', 'ford', 'microsoft', 'levi']
@@ -32,7 +32,7 @@ microsoft = Stock('(MSFT)')
 levi = Stock('(LEVI)')
 
 
-f = open("stock_prices.txt", 'r')
+f = open("Python\stock_prices.txt", 'r')
 
 # get totals of each price
 for line in f:
