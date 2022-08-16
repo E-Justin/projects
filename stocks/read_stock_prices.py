@@ -37,8 +37,6 @@ class Stock:
             self.symbol, self.average_price, self.average_price_change, self.average_percent_change))
 
 
-stock_names = ['disney', 'apple', 'nvidia', 'ford', 'microsoft', 'levi']
-
 stock_symbols = ['(DIS)', '(AAPL)', '(NVDA)', '(F)', '(MSFT)', '(LEVI)']
 
 
@@ -49,66 +47,34 @@ ford = Stock('(F)')
 microsoft = Stock('(MSFT)')
 levi = Stock('(LEVI)')
 
+stock_names = [disney, apple, nvidia, ford, microsoft, levi]
+
 # open file for reading
 f = open("Python\stock_prices.txt", 'r')
 
 for line in f:
+
     # get totals of each price
-    disney.set_total_current_prices(line)
-    apple.set_total_current_prices(line)
-    nvidia.set_total_current_prices(line)
-    ford.set_total_current_prices(line)
-    microsoft.set_total_current_prices(line)
-    levi.set_total_current_prices(line)
-    # set total price change
-    disney.set_total_price_change(line)
-    apple.set_total_price_change(line)
-    nvidia.set_total_price_change(line)
-    ford.set_total_price_change(line)
-    microsoft.set_total_price_change(line)
-    levi.set_total_price_change(line)
-    # set total percent change
-    disney.set_total_percent_change(line)
-    apple.set_total_percent_change(line)
-    nvidia.set_total_percent_change(line)
-    ford.set_total_percent_change(line)
-    microsoft.set_total_percent_change(line)
-    levi.set_total_percent_change(line)
+    for stock in stock_names:
+        stock.set_total_current_prices(line)
+        stock.set_total_price_change(line)
+        stock.set_total_percent_change(line)
+
 
 # close file
 f.close()
 
-# set average price change for each stock
-disney.set_average_price_change()
-apple.set_average_price_change()
-nvidia.set_average_price_change()
-ford.set_average_price_change()
-microsoft.set_average_price_change()
-levi.set_average_price_change()
+# set averages for: price change, percent change, and current price
+for stock in stock_names:
+    stock.set_average_price_change()
+    stock.set_average_percent_change()
+    stock.set_average_price()
 
-# set average percent change of each stock
-disney.set_average_percent_change()
-apple.set_average_percent_change()
-nvidia.set_average_percent_change()
-ford.set_average_percent_change()
-microsoft.set_average_percent_change()
-levi.set_average_percent_change()
-
-# set average price of each stock
-disney.set_average_price()
-apple.set_average_price()
-nvidia.set_average_price()
-ford.set_average_price()
-microsoft.set_average_price()
-levi.set_average_price()
 
 # display average data
-disney.display_average_data()
-apple.display_average_data()
-nvidia.display_average_data()
-ford.display_average_data()
-microsoft.display_average_data()
-levi.display_average_data()
+for stock in stock_names:
+    stock.display_average_data()
+
 
 ''' 
 Todo:
@@ -116,4 +82,6 @@ Todo:
 2. 
 3. get low and high price for each stock in file
 4. fix formatting 
-5. make reading/ math functions more efficient (work together instead of independently)'''
+5. start date of the data
+6. end date of the data
+7. make functions more efficient (work together instead of independently'''
