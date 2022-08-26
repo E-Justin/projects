@@ -15,3 +15,19 @@ def index():
 def show(id: int):
     user = User.query.get_or_404(id)
     return jsonify(user.serialize())
+
+
+@bp.route('', methods=['POST'])
+def create():
+    # request body must contain: name, password, and email
+    if 'name' not in request.json or 'password' not in request.json or 'email' not in request.json:
+        return abort(400) # abort if requirments are not fulfilled
+    # construct new user
+    user = User(
+        name = request.json['name'],
+        password = request.json['password'],
+        email = request.json['email']
+    )
+    db.session.add(user)  # prepare CREATE statement
+    db.session.commit()  # execute CREATE statement
+    return jsonify(user.serialize())
