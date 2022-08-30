@@ -32,3 +32,15 @@ def create():
     db.session.add(stock)
     db.session.commit()
     return jsonify(stock.serialize())
+
+@bp.route('/<int:id>', methods=['DELETE'])
+def delete(id: int):
+    stock = Stock.query.get_or_404(id)  # query for stock
+    try:
+        # if all goes well
+        db.session.delete(stock)  # prepare DELETE statement
+        db.session.commit()  # execute delete statement
+        return jsonify(True)
+    except:
+        # if something goes wrong
+        return jsonify(False)
