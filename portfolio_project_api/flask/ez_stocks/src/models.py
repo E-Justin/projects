@@ -104,8 +104,8 @@ class Portfolio_stocks(db.Model):
 class Watch_list_stocks(db.Model):
     __tablename__ = 'watch_list_stocks'
     db.metadata,
-    watch_list_id = db.Column(db.Integer, db.ForeignKey('watch_list.id'), nullable = False, primary_key = True)
-    stock_id = db.Column(db.Integer, db.ForeignKey('stock.id'), nullable = False, primary_key = True)
+    watch_list_id = db.Column(db.Integer, db.ForeignKey('watch_lists.id'), nullable = False, primary_key = True)
+    stock_id = db.Column(db.Integer, db.ForeignKey('stocks.id'), nullable = False, primary_key = True)
 
     def serialize(self):
         return {
