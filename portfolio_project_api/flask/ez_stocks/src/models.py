@@ -92,15 +92,15 @@ class Watch_list(db.Model):
 class Portfolio_stocks(db.Model):
     __tablename__ = 'portfolio_stocks'
     db.metadata,
-    portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'), nullable = False, primary_key = True)
-    stock_id = db.Column(db.Integer, db.ForeignKey('stock.id'), nullable = False, primary_key = True)
+    portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolios.id'), nullable = False, primary_key = True)
+    stock_id = db.Column(db.Integer, db.ForeignKey('stocks.id'), nullable = False, primary_key = True)
 
     def serialize(self):
         return{
             'portfolio_id': self.portfolio_id,
             'stock_id': self.stock_id
         }
-
+#association table for many to many relationship btwn watch_lists and stocks
 class Watch_list_stocks(db.Model):
     __tablename__ = 'watch_list_stocks'
     db.metadata,
