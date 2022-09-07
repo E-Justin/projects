@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, abort
 from ..models import Stock, db
+from src import stock_info
 
 bp = Blueprint('stocks', __name__, url_prefix='/stocks')
 
@@ -49,7 +50,7 @@ def delete(id: int):
         # if something goes wrong
         return jsonify(False)
 
-@bp.route('/<int:id>', methods=['PATCH', 'PUT'])
+'''@bp.route('/<int:id>', methods=['PATCH', 'PUT'])
 def update(id: int):
     """ update stock info """
     # check to see if stock exists
@@ -66,4 +67,27 @@ def update(id: int):
         db.session.commit()
         return jsonify(stock.serialize())
     except:
+        return jsonify(False)'''
+
+@bp.route('/<int:id>', methods = ['PUT', 'PATCH'])
+def update(id: int):
+    """ update stock info by web scraping from id number"""
+    # check to see if stock exists -> get it if there
+    stock = Stock.query.get_or_404(id)
+    # must have name, symbol, current price, price change, and percent change in request
+    if 'symbol' not in request.json or 'name' not in request.json or 'current_price' not in request.json or 'percent_change' not in request.json or 'price_change' not in request.json:
+        return abort(400)
+
+    # the following function returns data in this format as a list of strings: [stock_price, price_change, percent_change]
+    data = stock_info.get_stock_info(id)
+    
+    # update stock info
+    stock.current_price = float(data[0])
+    stock.price_change  = float(data[1])
+    stock.percent_change = float(data[2])
+
+    try: # if all goes well
+        db.session.commit()  # commit the changes
+        return jsonify(stock.serialize())  # return the stock info as json
+    except: # if something goes wrong
         return jsonify(False)
