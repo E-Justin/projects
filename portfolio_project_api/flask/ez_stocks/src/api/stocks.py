@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request, abort
 from ..models import Stock, db
-from src import stock_info
+from src import stock_info # for web scraping real time stock info
 
 bp = Blueprint('stocks', __name__, url_prefix='/stocks')
 
